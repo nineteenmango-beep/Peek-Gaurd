@@ -16,22 +16,16 @@ jobs:
 
       - name: Setup Android SDK
         uses: android-actions/setup-android@v3
+        with:
+          cmdline-tools-version: '11076708'
+          accept-android-sdk-licenses: true
 
-      - name: 自动生成gradlew脚本
+      - name: Build debug APK
         working-directory: ./app
-        run: gradle wrapper --gradle-version 8.0
+        run: gradle assembleDebug --no-daemon
 
-      - name: 授予执行权限
-        working-directory: ./app
-        run: chmod +x gradlew
-
-      - name: 编译APK
-        working-directory: ./app
-        run: ./gradlew assembleDebug
-
-      - name: 上传APK产物
+      - name: Upload APK artifact
         uses: actions/upload-artifact@v4
         with:
           name: PeekGaurd-APK
           path: app/build/outputs/apk/debug/app-debug.apk
-
