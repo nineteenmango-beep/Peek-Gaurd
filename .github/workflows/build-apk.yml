@@ -1,13 +1,11 @@
 name: Build Peek-Gaurd APK
-
 on:
-  workflow_dispatch:
-
+  workflow_dispatch
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout code
+      - name: Checkout source code
         uses: actions/checkout@v4
 
       - name: Setup JDK 17
@@ -19,14 +17,14 @@ jobs:
       - name: Setup Android SDK
         uses: android-actions/setup-android@v3
 
-      - name: Grant execute permission for gradlew
+      - name: Grant permission
         run: chmod +x gradlew
 
-      - name: Build Debug APK
+      - name: Build debug APK
         run: ./gradlew assembleDebug
 
-      - name: Upload APK
+      - name: Upload APK artifact
         uses: actions/upload-artifact@v4
         with:
-          name: app-apk
+          name: PeekGaurd-APK
           path: app/build/outputs/apk/debug/app-debug.apk
