@@ -17,10 +17,13 @@ jobs:
       - name: Setup Android SDK
         uses: android-actions/setup-android@v3
 
+      # 进入app目录再给权限、打包
       - name: Grant permission
+        working-directory: ./app
         run: chmod +x gradlew
 
       - name: Build debug APK
+        working-directory: ./app
         run: ./gradlew assembleDebug
 
       - name: Upload APK artifact
